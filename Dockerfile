@@ -47,7 +47,10 @@ ENV ZONEINFO=/zoneinfo.zip
 
 FROM release-base AS release
 WORKDIR /go/bin
-ADD ./certs /go/bin/certs
+# copy certs from local repo
+#ADD ./certs /go/bin/certs
+# copy cert from remote repo
+COPY --from=builder /build/certs /go/bin/
 COPY --from=builder /build/antiPopup /go/bin/
 USER ${USER}:${USER}
 ENTRYPOINT [ "/go/bin/antiPopup" ]
