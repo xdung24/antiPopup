@@ -1,14 +1,14 @@
 version: '3.7'
 services:
-  antiPopup:
+  anti-popup:
     build:
       context: .
       dockerfile: "./Dockerfile"
-    image: antiPopup:latest
+    image: anti-popup:latest
     restart: unless-stopped
-    container_name: antiPopup
+    container_name: anti-popup
     volumes:
-      - "./certs:/go/bin/certs"
+      - "./certs:/go/bin/certs"  # optional
     ports:
       - "0.0.0.0:80:80"
       - "0.0.0.0:443:443"

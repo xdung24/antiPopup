@@ -23,13 +23,15 @@ RUN adduser \
 
 # build
 FROM builder-base AS builder
-RUN mkdir /build
+RUN mkdir -p /build
 
-# build from local repo
+# copy source from local repo
 #COPY . /build/ 
 
-# build from remote repo
+# clone source from remote repo
+RUN git clone https://github.com/xdung24/antiPopup.git /build
 
+# build binary
 WORKDIR /build
 RUN go mod download
 RUN go mod verify
@@ -45,6 +47,7 @@ ENV ZONEINFO=/zoneinfo.zip
 
 FROM release-base AS release
 WORKDIR /go/bin
+ADD ./certs /go/bin/certs
 COPY --from=builder /build/antiPopup /go/bin/
 USER ${USER}:${USER}
 ENTRYPOINT [ "/go/bin/antiPopup" ]
