@@ -1,0 +1,22 @@
+version: '3.7'
+services:
+  antiPopup:
+    build:
+      context: .
+      dockerfile: "./Dockerfile"
+    image: antiPopup:latest
+    restart: unless-stopped
+    container_name: antiPopup
+    volumes:
+      - "./certs:/go/bin/certs"
+    ports:
+      - "0.0.0.0:80:80"
+      - "0.0.0.0:443:443"
+    deploy:
+      resources:
+        limits:
+          cpus: '0.70'
+          memory: 100M
+    network_mode: bridge
+
+
